@@ -1,11 +1,8 @@
 // app/api/ai/analyze/route.ts
-import { auth }          from "@clerk/nextjs/server";
+import { auth }                      from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
-import Groq from "groq-sdk";
-import { z }             from "zod";
-import { prisma }        from "@/lib/prisma";
-
-const openai = new Groq({ apiKey: process.env.GROQ_API_KEY });
+import { z }                         from "zod";
+import { prisma }                    from "@/lib/prisma";
 
 const RequestSchema = z.object({
   noteId:  z.string().cuid(),
@@ -64,7 +61,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   const { noteId, title, content } = parsed.data;
 
   const note = await prisma.note.findFirst({
-    where: { id: noteId, user: { clerkId } },
+    where:  { id: noteId, user: { clerkId } },
     select: { id: true },
   });
   if (!note) return NextResponse.json({ error: "Note introuvable" }, { status: 404 });
@@ -73,7 +70,10 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   let rawText: string;
 
   try {
-    const completion = await openai.chat.completions.create({
+    const Groq = (await import("groq-sdk")).default;
+    const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+    const completion = await groq.chat.completions.create({
       model:       MODEL,
       temperature: 0.4,
       max_tokens:  600,
@@ -84,7 +84,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     });
     rawText = completion.choices[0]?.message?.content?.trim() ?? "";
   } catch (err) {
-    console.error("[ai/analyze] OpenAI error:", err);
+    console.error("[ai/analyze] Groq error:", err);
     return NextResponse.json({ error: "Erreur IA. Réessayez dans quelques instants." }, { status: 502 });
   }
 
