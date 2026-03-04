@@ -71,7 +71,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         {/* User */}
         <div className="px-4 py-4 border-t border-slate-800 flex items-center gap-3">
-          <UserButton afterSignOutUrl="/" appearance={{ baseTheme: undefined }} />
+          <UserButton />
           <span className="text-xs text-slate-500 font-medium">Mon compte</span>
         </div>
       </aside>
@@ -87,7 +87,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <Sparkles size={14} className="text-violet-400" />
             <span className="font-bold text-sm">ProductivityAI</span>
           </div>
-          <UserButton afterSignOutUrl="/" />
+          <UserButton />
         </header>
 
         <main className="flex-1 overflow-auto p-6 md:p-10">
