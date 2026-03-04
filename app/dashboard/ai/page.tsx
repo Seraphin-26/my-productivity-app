@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { Sparkles, Brain, Tag } from "lucide-react";
 
 export default async function AIPage() {
-  const { userId: clerkId } = auth();
+  const { userId: clerkId } = await auth();
   if (!clerkId) redirect("/sign-in");
 
   const user = await prisma.user.findUnique({ where: { clerkId } });
