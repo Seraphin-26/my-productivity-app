@@ -21,11 +21,12 @@ async function getNote(noteId: string, clerkId: string) {
 }
 
 // PATCH /api/notes/[id]
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { userId: clerkId } = await auth();
   if (!clerkId) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
 
-  const note = await getNote(params.id, clerkId);
+  const { id } = await params;
+  const note = await getNote(id, clerkId);
   if (!note) return NextResponse.json({ error: "Note introuvable" }, { status: 404 });
 
   const body   = await req.json();
@@ -33,7 +34,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   if (!parsed.success) return NextResponse.json({ error: parsed.error.flatten() }, { status: 422 });
 
   const updated = await prisma.note.update({
-    where:   { id: params.id },
+    where:   { id },
     data:    parsed.data,
     include: { aiInsight: true },
   });
@@ -42,13 +43,14 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 }
 
 // DELETE /api/notes/[id]
-export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { userId: clerkId } = await auth();
   if (!clerkId) return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
 
-  const note = await getNote(params.id, clerkId);
+  const { id } = await params;
+  const note = await getNote(id, clerkId);
   if (!note) return NextResponse.json({ error: "Note introuvable" }, { status: 404 });
 
-  await prisma.note.delete({ where: { id: params.id } });
+  await prisma.note.delete({ where: { id } });
   return NextResponse.json({ success: true });
 }
