@@ -1,0 +1,66 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  clerkId   String   @unique
+  email     String   @unique
+  name      String?
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  notes Note[]
+
+  @@map("users")
+}
+
+model Note {
+  id        String     @id @default(cuid())
+  title     String
+  content   String     @default("")
+  status    NoteStatus @default(TODO)
+  tags      String[]   @default([])
+  position  Int        @default(0)
+  isPinned  Boolean    @default(false)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  userId    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  aiInsight AI_Insight?
+
+  @@index([userId])
+  @@index([status])
+  @@index([userId, status])
+  @@map("notes")
+}
+
+enum NoteStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+model AI_Insight {
+  id             String   @id @default(cuid())
+  summary        String
+  suggestedTasks Json     @default("[]")
+  suggestedTags  String[] @default([])
+  modelUsed      String   @default("gpt-4o-mini")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  noteId String @unique
+  note   Note   @relation(fields: [noteId], references: [id], onDelete: Cascade)
+
+  @@map("ai_insights")
+}
