@@ -1,16 +1,46 @@
-# 🚀 ProductivityAI — Setup
+# 🚀 ProductivityAI
+Application de productivité utilisant l'IA pour transformer des notes en résumés, tâches et tags automatiquement.
 
-Application de productivité fullstack Next.js avec IA intégrée.
+[![Live Demo](https://img.shields.io/badge/Live-Demo-green?style=for-the-badge)](https://my-productivity-app-gamma.vercel.app/)
+
+
+![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-4.9-blue?style=for-the-badge&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-v3-38B2AC?style=for-the-badge&logo=tailwind-css)
+![Clerk](https://img.shields.io/badge/Clerk-Auth-purple?style=for-the-badge)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14-blue?style=for-the-badge&logo=postgresql)
+![Prisma](https://img.shields.io/badge/Prisma-ORM-0A6CFF?style=for-the-badge&logo=prisma)
+![Grok](https://img.shields.io/badge/Grok-3.3-FF6F61?style=for-the-badge)
+![TanStack Query](https://img.shields.io/badge/TanStack_Query-React-yellow?style=for-the-badge)
+![Zustand](https://img.shields.io/badge/Zustand-StateManagement-00C7B7?style=for-the-badge)
 
 ## Stack
 - **Next.js 15** (App Router) + TypeScript + Tailwind CSS
 - **Clerk** — Authentification
 - **PostgreSQL** + **Prisma ORM** — Base de données
-- **OpenAI GPT-4o mini** — Analyse IA des notes
+- **Grok 3.3 70B** — Analyse IA des notes
 - **TanStack Query** + **Zustand** — State management
 
 ---
 
+## Screenshots
+
+### Desktop View
+<img src="screenshots/desktop.png" width="500px" alt="Desktop view" />
+<img src="screenshots/desktop_1.png" width="500px" alt="Desktop view" />
+<img src="screenshots/desktop_2.png" width="500px" alt="Desktop view" />
+<img src="screenshots/desktop_3.png" width="500px" alt="Desktop view" />
+<img src="screenshots/desktop_4.png" width="500px" alt="Desktop view" />
+
+### Mobile View
+<img src="screenshots/mobile.png" width="250px" alt="Mobile view" />
+<img src="screenshots/mobile_1.png" width="250px" alt="Mobile view" />
+<img src="screenshots/mobile_2.png" width="250px" alt="Mobile view" />
+<img src="screenshots/mobile_3.png" width="250px" alt="Mobile view" />
+
+
+
+##SETUP
 ## ⚡ Installation en 5 étapes
 
 ### 1. Installer les dépendances
